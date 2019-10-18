@@ -1,0 +1,50 @@
+.toolbox .list-toolbox {
+    display: block;
+    margin-left: 150px;
+}
+
+.toolbox:hover .list-toolbox li a{
+    animation-name: none!important;
+}
+
+.box-blog-info .info {
+    margin-left: 20px;
+    /* text-align: right; */
+}
+
+.toolbox .toolbox-entry {
+    background: transparent;
+}
+
+@media screen and (min-width: 768px) {
+    .page-header .box-blog-info {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 -30px;
+    }
+    .page-header .box-blog-info .info h3{
+        text-align: right;
+    }
+}
+
+.custome-main-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custome-content-home {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: static;
+    margin: 10% auto 0;
+}
+
+.custome-main-page .post-list-box {
+    margin-top: -50px;
+}
+.custome-content-home hr {
+    width: 100%;
+}
