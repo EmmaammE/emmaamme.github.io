@@ -7,24 +7,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>blog 1 | 猪猪的博客</title>
+  <title>130. Surrounded Regions | 猪猪的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="test,book," />
+    <meta name="keywords" content="graph,dfs," />
   
 
-  <meta name="description" content="终于决定写博客系列最近看了一个很有意思的小说——《绝对笑喷之弃夜医生日志》，看了开头就让我决定再一次尝试写博客，希望后面能不鸽。 想想也希望用这种方式纪念我的黄金时代或职业生涯。 说起来，有这个想法的是这周三，当时我刚看了几段作者调侃初级医生职业的话，在洗澡有如文思泉涌，特别想写自己生活的段子。拖延到今天，已经是忘掉了所有俏皮的话。 哎，所以这第一篇就写到这吧，仪式已经有了。 凑字数的分享为了显得">
-<meta name="keywords" content="test,book">
+  <meta name="description" content="题目描述 基本思路就是要找到不在边界上的’O’连通块，或者在边界上的’O’连通块。  联通： 上下左右是不是’O’ dfs &#x2F; bfs &#x2F; Union-Find   技巧 通过改变char标记’O’是否已经是访问过    dfs12345678910111213141516171819202122232425262728293031323334353637383940414243444546474">
+<meta name="keywords" content="graph,dfs">
 <meta property="og:type" content="article">
-<meta property="og:title" content="blog 1">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;19&#x2F;blog-1&#x2F;index.html">
+<meta property="og:title" content="130. Surrounded Regions">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;21&#x2F;130-Surrounded-Regions&#x2F;index.html">
 <meta property="og:site_name" content="猪猪的博客">
-<meta property="og:description" content="终于决定写博客系列最近看了一个很有意思的小说——《绝对笑喷之弃夜医生日志》，看了开头就让我决定再一次尝试写博客，希望后面能不鸽。 想想也希望用这种方式纪念我的黄金时代或职业生涯。 说起来，有这个想法的是这周三，当时我刚看了几段作者调侃初级医生职业的话，在洗澡有如文思泉涌，特别想写自己生活的段子。拖延到今天，已经是忘掉了所有俏皮的话。 哎，所以这第一篇就写到这吧，仪式已经有了。 凑字数的分享为了显得">
+<meta property="og:description" content="题目描述 基本思路就是要找到不在边界上的’O’连通块，或者在边界上的’O’连通块。  联通： 上下左右是不是’O’ dfs &#x2F; bfs &#x2F; Union-Find   技巧 通过改变char标记’O’是否已经是访问过    dfs12345678910111213141516171819202122232425262728293031323334353637383940414243444546474">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2019-10-18T18:17:14.500Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;21&#x2F;130-Surrounded-Regions&#x2F;1.png">
+<meta property="og:updated_time" content="2019-10-20T18:19:28.769Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;21&#x2F;130-Surrounded-Regions&#x2F;1.png">
 
   
 
@@ -194,20 +196,20 @@ ga('send', 'pageview');
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#终于决定写博客系列"><span class="toc-text">终于决定写博客系列</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#凑字数的分享"><span class="toc-text">凑字数的分享</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目描述"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本思路"><span class="toc-text">基本思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#dfs"><span class="toc-text">dfs</span></a></li></ol></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-blog-1" class="article article-type-post" itemprop="blogPost">
+   <article id="post-130-Surrounded-Regions" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">blog 1</h1>
+    <h1 class="post-title">130. Surrounded Regions</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2019.10.19</span>
+        <span>2019.10.21</span>
       </span>
 
       
@@ -220,7 +222,7 @@ ga('send', 'pageview');
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/journal/">journal</a>
+    <a class="article-category-link" href="/categories/alg/">alg</a>
   </span>
 
 
@@ -239,16 +241,20 @@ ga('send', 'pageview');
 
   <div class="article-content">
     
-      <h1 id="终于决定写博客系列"><a href="#终于决定写博客系列" class="headerlink" title="终于决定写博客系列"></a>终于决定写博客系列</h1><p>最近看了一个很有意思的小说——《绝对笑喷之弃夜医生日志》，看了开头就让我决定再一次尝试写博客，希望后面能不鸽。</p>
-<p>想想也希望用这种方式纪念我的黄金时代或职业生涯。</p>
-<p>说起来，有这个想法的是这周三，当时我刚看了几段作者调侃初级医生职业的话，在洗澡有如文思泉涌，特别想写自己生活的段子。拖延到今天，已经是忘掉了所有俏皮的话。</p>
-<p>哎，所以这第一篇就写到这吧，仪式已经有了。</p>
-<h1 id="凑字数的分享"><a href="#凑字数的分享" class="headerlink" title="凑字数的分享"></a>凑字数的分享</h1><p>为了显得稍微丰满一点，不如再分享一下前几天看的王尔德的小说。</p>
-<p>本来是看到了一句话：“请把你的心给我，与我为伍，这个世界太残酷，我有点害怕。” 因为好奇这个写了本书骂前任的小说家，是在什么语境下写出这样的句子，于是翻了翻， 这句话出自童话《渔夫和他的灵魂》，看网上有说这个一不小心成了他的童年阴影的23333。</p>
-<p>整篇童话有很多隐喻，还和文化背景有关，第一遍真的没看懂。这句话并不是渔夫对恋人说的，而是他斩掉他的灵魂时，灵魂对他说的。</p>
-<p>没有了心的灵魂，在世上游荡，无谓善无谓恶，获得了智慧，掠夺了财富，可是还是希望能回到渔夫身边。从侧面看，怀着爱与善良才能坚定地行走在人世间吧。</p>
-<p>总之，王尔德的童话真的不错。</p>
-
+      <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="/2019/10/21/130-Surrounded-Regions/1.png" alt="problem"></p>
+<h1 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h1><p>就是要找到不在边界上的’O’连通块，或者在边界上的’O’连通块。</p>
+<ul>
+<li>联通：<ul>
+<li>上下左右是不是’O’</li>
+<li>dfs / bfs / Union-Find</li>
+</ul>
+</li>
+<li>技巧<ul>
+<li>通过改变char标记’O’是否已经是访问过</li>
+</ul>
+</li>
+</ul>
+<h2 id="dfs"><a href="#dfs" class="headerlink" title="dfs"></a>dfs</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Solution</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">int</span> c,r;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">void</span> solve(vector&lt;vector&lt;char&gt;&gt; &amp;board)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(board.size()==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        c = board[<span class="number">0</span>].size();</span><br><span class="line">        r = board.size();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; c; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 第一行和最后一行所有元素</span></span><br><span class="line">            dfs(<span class="number">0</span>,i,board);</span><br><span class="line">            dfs(r<span class="number">-1</span>,i,board);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; r; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 第一列和最后一列所有的元素</span></span><br><span class="line">            dfs(i,<span class="number">0</span>,board);</span><br><span class="line">            dfs(i,c<span class="number">-1</span>,board);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; r; i++)</span><br><span class="line">        &#123;</span><br><span class="line">           <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; c; j++)</span><br><span class="line">           &#123;</span><br><span class="line">               <span class="keyword">if</span>(board[i][j] == <span class="string">'G'</span>) &#123;</span><br><span class="line">                   board[i][j] = <span class="string">'O'</span>;</span><br><span class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span>(board[i][j] == <span class="string">'O'</span>) &#123;</span><br><span class="line">                   board[i][j] = <span class="string">'X'</span>;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">void</span> dfs(<span class="built_in">int</span> x, <span class="built_in">int</span> y,vector&lt;vector&lt;char&gt;&gt; &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;<span class="number">0</span>||x&gt;=r||y&lt;<span class="number">0</span>||y&gt;=c||b[x][y]!=<span class="string">'O'</span>) <span class="keyword">return</span>;</span><br><span class="line">        b[x][y] = <span class="string">'G'</span>;</span><br><span class="line">        dfs(x<span class="number">-1</span>,y,b);</span><br><span class="line">        dfs(x+<span class="number">1</span>,y,b);</span><br><span class="line">        dfs(x,y<span class="number">-1</span>,b);</span><br><span class="line">        dfs(x,y+<span class="number">1</span>,b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     
   </div>
 
@@ -256,13 +262,13 @@ ga('send', 'pageview');
     <div class="tag-title">标签</div>
     <div class="tag-list">
       
-        <a class="tag-item" href="#book">
-          <span class="tag-name">book</span>
+        <a class="tag-item" href="#dfs">
+          <span class="tag-name">dfs</span>
           <span class="tag-size">( 1 )</span>
         </a>
       
-        <a class="tag-item" href="#test">
-          <span class="tag-name">test</span>
+        <a class="tag-item" href="#graph">
+          <span class="tag-name">graph</span>
           <span class="tag-size">( 1 )</span>
         </a>
       
@@ -302,10 +308,10 @@ ga('send', 'pageview');
  -->
    
   <div class="box-prev-next clearfix">
-    <a class="hide pull-left" href="/">
+    <a class="show pull-left" href="/2019/10/19/blog-1/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/10/21/130-Surrounded-Regions/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -430,7 +436,7 @@ ga('send', 'pageview');
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2019/10/19/blog-1/';
+    var disqus_url = 'http://yoursite.com/2019/10/21/130-Surrounded-Regions/';
     
     (function(){
       var dsq = document.createElement('script');
