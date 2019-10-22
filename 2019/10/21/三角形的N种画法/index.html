@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>三角形的N种画法 | 猪猪的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="CSS," />
+  
+
+  <meta name="description" content="本篇文章主要介绍常用绘制三角形的技术和我在应用中的体会 常用技术border绘制一般应该都会先想到用border绘制   原理：一个元素的边框分成四份，上右下左，以对角线为界。  比如对于一个div,如下样式  12345width: 10px;height: 10px;border-style: solid;border-width: 40px 40px 40px 40px;border-col">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三角形的N种画法">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;21&#x2F;%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84N%E7%A7%8D%E7%94%BB%E6%B3%95&#x2F;index.html">
+<meta property="og:site_name" content="猪猪的博客">
+<meta property="og:description" content="本篇文章主要介绍常用绘制三角形的技术和我在应用中的体会 常用技术border绘制一般应该都会先想到用border绘制   原理：一个元素的边框分成四份，上右下左，以对角线为界。  比如对于一个div,如下样式  12345width: 10px;height: 10px;border-style: solid;border-width: 40px 40px 40px 40px;border-col">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;21&#x2F;%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84N%E7%A7%8D%E7%94%BB%E6%B3%95&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;21&#x2F;%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84N%E7%A7%8D%E7%94%BB%E6%B3%95&#x2F;2.png">
+<meta property="og:updated_time" content="2019-10-22T13:24:48.629Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;21&#x2F;%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84N%E7%A7%8D%E7%94%BB%E6%B3%95&#x2F;1.png">
+
+  
+
+  
+    <link rel="icon" href="/piggy.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/zhuzhu-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">目录</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">目录</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/categories/alg"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            算法
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/categories/frontend"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            前端
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/categories/journal"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            随笔
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#常用技术"><span class="toc-text">常用技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#border绘制"><span class="toc-text">border绘制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#svg绘制"><span class="toc-text">svg绘制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#transform"><span class="toc-text">transform</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#clip-path"><span class="toc-text">clip-path</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#应用"><span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hover一个三角形"><span class="toc-text">hover一个三角形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带透明度的tooltip、对话框啥的"><span class="toc-text">带透明度的tooltip、对话框啥的</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他一些有的没的"><span class="toc-text">其他一些有的没的</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-三角形的N种画法" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">三角形的N种画法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.10.21</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhuzhu</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/frontend/">frontend</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+          
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>本篇文章主要介绍常用绘制三角形的技术和我在应用中的体会</p>
+<h1 id="常用技术"><a href="#常用技术" class="headerlink" title="常用技术"></a>常用技术</h1><h2 id="border绘制"><a href="#border绘制" class="headerlink" title="border绘制"></a>border绘制</h2><p>一般应该都会先想到用border绘制</p>
+<p>  原理：一个元素的边框分成四份，上右下左，以对角线为界。<br>  比如对于一个div,如下样式<br>  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">10px</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">10px</span>;</span><br><span class="line"><span class="attribute">border-style</span>: solid;</span><br><span class="line"><span class="attribute">border-width</span>: <span class="number">40px</span> <span class="number">40px</span> <span class="number">40px</span> <span class="number">40px</span>;</span><br><span class="line"><span class="attribute">border-color</span>: <span class="number">#ff0000</span> <span class="number">#00ff00</span> <span class="number">#0000ff</span> <span class="number">#cccccc</span>;</span><br></pre></td></tr></table></figure><br>  结果会是这样<br>  <div align="center"><br>      <img src="/2019/10/21/%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84N%E7%A7%8D%E7%94%BB%E6%B3%95/1.png"><br>  </div><br>下面是三角形的代码示例，不规则的改变border的宽度就好</p>
+<iframe src="https://codesandbox.io/embed/objective-wind-02ic9?fontsize=14" title="objective-wind-02ic9" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+<h2 id="svg绘制"><a href="#svg绘制" class="headerlink" title="svg绘制"></a>svg绘制</h2><p>使用svg绘制的话，其实更简单了</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg <span class="built_in">width</span>=<span class="string">"100"</span> <span class="built_in">height</span>=<span class="string">"100"</span>&gt;</span><br><span class="line">  &lt;<span class="built_in">polygon</span> <span class="built_in">points</span>=<span class="string">"0,0 100,0 50,100"</span> /&gt;</span><br><span class="line">&lt;/svg&gt;</span><br></pre></td></tr></table></figure>
+<iframe src="https://codesandbox.io/embed/winter-hooks-ejotz?fontsize=14" title="winter-hooks-ejotz" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+<h2 id="transform"><a href="#transform" class="headerlink" title="transform"></a>transform</h2><p>使用transform其实也很简单，只要大家记得平行四边形是两个三角形就可以了。</p>
+<p>原理就是使用两个元素，子元素作为平行四边形旋转，父元素设置一个框，overflow截断。可以调整transform-origin的值，来帮助设定三角形的相对位置。</p>
+<p>通过skew来确定不同形状的三角形，个人目前是设置一个和需要的角度相适应的tan宽、高，再旋转和skew。但是角度和我设想的略有偏差，比如下面代码不是15deg而是16.5deg的skew</p>
+<p>具体实现见代码：</p>
+<iframe src="https://codesandbox.io/embed/transform-triangle-vv9cd?fontsize=14" title="transform-triangle" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+<h2 id="clip-path"><a href="#clip-path" class="headerlink" title="clip-path"></a>clip-path</h2><p>还有一种就是使用clip-path，其应用也很广泛。</p>
+<iframe src="https://codesandbox.io/embed/great-fermat-orbml?fontsize=14" title="great-fermat-orbml" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+<div class="zhuzhu-hr"></div>
+
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><p>如果之前有人给我看一篇这样的博客，我一定会觉得他是孔乙己，但是最近碰到两个需求，尝试了不同方法实现。</p>
+<h2 id="hover一个三角形"><a href="#hover一个三角形" class="headerlink" title="hover一个三角形"></a>hover一个三角形</h2><p>如果大家打开控制台，会发现，使用border、svg、clip-path创建的三角形还是表现为一个”矩形”<br><img src="/2019/10/21/%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84N%E7%A7%8D%E7%94%BB%E6%B3%95/2.png" alt="hover"><br>只有使用transfrom方法的才会是一个三角形，方便实现hover一个三角形元素时的效果。</p>
+<h2 id="带透明度的tooltip、对话框啥的"><a href="#带透明度的tooltip、对话框啥的" class="headerlink" title="带透明度的tooltip、对话框啥的"></a>带透明度的tooltip、对话框啥的</h2><p>这种就比较适合使用border了，以免发生重叠。</p>
+<h1 id="其他一些有的没的"><a href="#其他一些有的没的" class="headerlink" title="其他一些有的没的"></a>其他一些有的没的</h1><p>在使用上述几种方法绘制三角形时，有时候要选择使用嵌套元素或者伪类元素，目前觉得虽然代码不一样，但是没有明显的差异。</p>
+<p>至于一些不同形状的三角形，比如描边三角形，可以使用两个三角形来模拟或者如果有的实现方式下直接描边；空心三角形使用border比较好。</p>
+<p>一个利用padding,transform,切割图片为三角形的。也可以clip-path图片等<br><a href="https://codepen.io/web-tiki/pen/ntmDK" target="_blank" rel="noopener">https://codepen.io/web-tiki/pen/ntmDK</a></p>
+
+    
+  </div>
+
+  <section class="tag-box">
+    <div class="tag-title">标签</div>
+    <div class="tag-list">
+      
+        <a class="tag-item" href="#CSS">
+          <span class="tag-name">CSS</span>
+          <span class="tag-size">( 1 )</span>
+        </a>
+      
+    </div>
+  </section>
+
+</article>
+
+
+   <!-- 
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+ -->
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/10/21/130-Surrounded-Regions/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/categories/alg"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              算法
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/categories/frontend"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              前端
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/categories/journal"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              随笔
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2019/10/21/%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84N%E7%A7%8D%E7%94%BB%E6%B3%95/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
