@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>YDKJS阅读：Scope | 猪猪的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="YDKJS," />
+  
+
+  <meta name="description" content="这个系列，是我阅读You-Dont-Know-JS 第二版的笔记，不会完全翻译。 Chapter 1: How is Scope Compiled?How is Scope Compiled?程序语言的一个关键是使用变量存储值，以及再取出值。事实上，这个过程是我们对程序状态进行建模的主要方式。 为了了解变量的工作方式，我们首先要了解变量”住”在哪里？换句话说，JS引擎如何组织和访问变量？ 这些问题">
+<meta name="keywords" content="YDKJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YDKJS阅读：Scope">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;25&#x2F;YDKJS%E9%98%85%E8%AF%BB%EF%BC%9AScope-Closures&#x2F;index.html">
+<meta property="og:site_name" content="猪猪的博客">
+<meta property="og:description" content="这个系列，是我阅读You-Dont-Know-JS 第二版的笔记，不会完全翻译。 Chapter 1: How is Scope Compiled?How is Scope Compiled?程序语言的一个关键是使用变量存储值，以及再取出值。事实上，这个过程是我们对程序状态进行建模的主要方式。 为了了解变量的工作方式，我们首先要了解变量”住”在哪里？换句话说，JS引擎如何组织和访问变量？ 这些问题">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2019-11-26T17:16:32.511Z">
+<meta name="twitter:card" content="summary">
+
+  
+
+  
+    <link rel="icon" href="/piggy.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/zhuzhu-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">目录</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">目录</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/categories/alg"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            算法
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/categories/frontend"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            前端
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/categories/journal"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            随笔
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-1-How-is-Scope-Compiled"><span class="toc-text">Chapter 1: How is Scope Compiled?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#How-is-Scope-Compiled"><span class="toc-text">How is Scope Compiled?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-This-Book"><span class="toc-text">About This Book</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Compiling-Code"><span class="toc-text">Compiling Code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#等待看的连接"><span class="toc-text">等待看的连接</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-YDKJS阅读：Scope-Closures" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">YDKJS阅读：Scope</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.11.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhuzhu</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/frontend/">frontend</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+          
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>这个系列，是我阅读You-Dont-Know-JS 第二版的笔记，不会完全翻译。</p>
+<h1 id="Chapter-1-How-is-Scope-Compiled"><a href="#Chapter-1-How-is-Scope-Compiled" class="headerlink" title="Chapter 1: How is Scope Compiled?"></a>Chapter 1: How is Scope Compiled?</h1><h2 id="How-is-Scope-Compiled"><a href="#How-is-Scope-Compiled" class="headerlink" title="How is Scope Compiled?"></a>How is Scope Compiled?</h2><p>程序语言的一个关键是使用变量存储值，以及再取出值。事实上，这个过程是我们对程序状态进行建模的主要方式。</p>
+<p>为了了解变量的工作方式，我们首先要了解变量”住”在哪里？换句话说，JS引擎如何组织和访问变量？</p>
+<p>这些问题意味着需要一套良好定义的规则来管理变量，这称为scope。了解scope的第一步是讨论JS引擎如何处理和执行程序。</p>
+<h2 id="About-This-Book"><a href="#About-This-Book" class="headerlink" title="About This Book"></a>About This Book</h2><p>在第二本书中，主要关注JS语言的第一个支柱：作用域和函数闭包，以及这些机制如何实现模块设计模式（module design pattern)。</p>
+<p>JS通常被归类为解释型脚本语言，因此常被认为程序是通过一个自上而下的过程处理的。但实际上，JS是在<strong>执行开始前在独立的阶段解析和编译（parsed/compiled)的</strong>。代码作者关于在何处放置变量、函数和块的决定将在初始的解析/编译阶段，根据定义域规则进行分析。最终的定义域不会受运行时条件的影响。</p>
+<p>JS函数本身就是值（value),这意味着函数可以像数字或字符串那样被赋值和传递。但是由于这些函数可以持有和访问变量，无论函数最终在程序的哪个位置执行，他们都讲保持其原有的作用域，这就被称为<strong>闭包</strong>。</p>
+<p>模块（Module)是一种组织代码的方式，其特征在于具有一组公共方法，这些公告方法可以通过闭包访问隐藏在其内部作用域的变量和函数。</p>
+<h2 id="Compiling-Code"><a href="#Compiling-Code" class="headerlink" title="Compiling Code"></a>Compiling Code</h2><p>取决于你使用编程语言的背景，你可能会惊讶于JS is compiled,尽管它常常被归类为动态的解释型语言。JS并不像很多传统的编译型语言那样，提前被编译好；也不是将编译的结果在各种分布式JS引擎上移植。然而，JS引擎确实执行了其他经典语言的编译器执行的类似步骤。</p>
+<p>我们讨论code compilation是为了了解scope，因为JS的作用域完全是在这个过程决定的。</p>
+<p>这里略去关于程序编译的三个基本过程的讨论（转成token流，生成AST，生成代码），总之，JS确实在执行前有一个解析／编译阶段，JS引擎会做诸如JIT的优化等。</p>
+<p>可以有三个program特征证明这一点：</p>
+<ol>
+<li><p>syntax errors</p>
+</li>
+<li><p>‘early errors’</p>
+</li>
+<li><p>hoisting</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">// 暂时性死区</span><br><span class="line">function saySomething() &#123;</span><br><span class="line">    <span class="keyword">var</span> greeting = <span class="string">"Hello"</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        greeting = <span class="string">"Howdy"</span>;</span><br><span class="line">        <span class="keyword">let</span> greeting = <span class="string">"Hi"</span>;</span><br><span class="line">        console.log(greeting);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">saySomething();</span><br><span class="line">// <span class="type">ReferenceError</span>: <span class="type">Cannot</span> access 'greeting' before initialization</span><br><span class="line">``` </span><br><span class="line">作者认为，这可以证明<span class="type">JS</span>程序必然在执行前被解析(parsed), 而很难想象production-quality的<span class="type">JS</span>引擎将会将程序解析为<span class="type">AST</span>，但是不讲这个<span class="type">AST</span>转化为最有效的二进制形式来执行。</span><br><span class="line"></span><br><span class="line"><span class="comment">## Lexical Scope</span></span><br><span class="line">对于一个作用域在compile time时确定的语言来说，它的作用域模型称为“词法作用域”.</span><br><span class="line"></span><br><span class="line">如果在函数内部声明一个变量，编译器(compiler)将解析(parse)函数，并把声明和函数作用域关联起来。如果一个变量是块作用域(<span class="keyword">let</span>/<span class="keyword">const</span>),那么将会与最近的“<span class="meta">&#123;...&#125;</span>”块关联起来。</span><br><span class="line"></span><br><span class="line">一个变量的引用必须可以用词法概念解析出(resolved)，否则这个变量是undeclared的。如果一个变量不在当前作用域内，将会访问外层作用域。这个向外访问的过程会一直持续到访问到变量或者到达全局作用域。</span><br><span class="line"></span><br><span class="line">需要注意，就为变量和作用域保留内存而言，编译过程没有做任何事。</span><br><span class="line"></span><br><span class="line">相反，编译过程创建了程序执行时所需要的所有词法环境的映射。可以将其看作定义所有作用域和注册关键字的插入的代码。</span><br><span class="line"></span><br><span class="line">因此，作用域是在编译过程中决定的，这就是为什么将“词法环境”看作编译时决定，但是他们实际上要到运行时才会被创建。每个作用域都会在需要执行的时候在内存中实例化。</span><br><span class="line"></span><br><span class="line">原文：https://github.com/getify/<span class="type">You</span>-<span class="type">Dont</span>-<span class="type">Know</span>-<span class="type">JS</span>/blob/<span class="number">2</span>nd-ed/scope-closures/ch1.md</span><br><span class="line"><span class="comment"># 涉及到的知识小记</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## V8引擎</span></span><br><span class="line">这篇记录了<span class="type">V8</span>引擎的一些优化技巧</span><br><span class="line">https://juejin.im/post/<span class="number">5</span>c2ca1106fb9a049ac794510<span class="comment">#heading-10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## [关于V8引擎和Javascript优化建议](https://juejin.im/post/5dc4ccba6fb9a04a746f0ed3)：</span></span><br><span class="line"></span><br><span class="line">![](<span class="number">2019</span>-<span class="number">11</span>-<span class="number">26</span>-<span class="number">13</span>-<span class="number">41</span>-<span class="number">32</span>.png)</span><br><span class="line"><span class="type">V8</span>中的优化编译器（<span class="type">Turbofan</span>)会将<span class="type">JS</span>代码转换为高效率的机器码。</span><br><span class="line"><span class="comment">### JS解析</span></span><br><span class="line">阶段：</span><br><span class="line">- <span class="type">Eager</span>：立即解析所有的代码</span><br><span class="line">- <span class="type">Lazy</span>： 按需做最少的解析</span><br><span class="line"></span><br><span class="line">立即解析所有代码，并不意味着性能优化。但是建议不使用函数嵌套。</span><br></pre></td></tr></table></figure>
+<p>// 糟糕的方式<br>function sumOfSquares(a, b) {<br>// 这里将被反复懒解析<br>function square(num) {<br> return num * num;<br>}</p>
+<p>return square(a) + square(b);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">改进后：</span><br></pre></td></tr></table></figure>
+<p>function square(num) {<br>return num * num;<br>}</p>
+</li>
+</ol>
+<p>// 好的方式<br>function sumOfSquares(a, b) {<br>  return square(a) + square(b);<br>}</p>
+<p>sumOfSquares(a, b);</p>
+<p>```</p>
+<h2 id="等待看的连接"><a href="#等待看的连接" class="headerlink" title="等待看的连接"></a>等待看的连接</h2><p><a href="https://segmentfault.com/a/1190000015640488" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015640488</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/27628685" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27628685</a></p>
+<p><a href="https://jiongks.name/blog/v8-javascript-performance-tips/" target="_blank" rel="noopener">https://jiongks.name/blog/v8-javascript-performance-tips/</a><br><a href="https://blog.logrocket.com/how-javascript-works-optimizing-the-v8-compiler-for-efficiency/" target="_blank" rel="noopener">https://blog.logrocket.com/how-javascript-works-optimizing-the-v8-compiler-for-efficiency/</a></p>
+<p><a href="https://segmentfault.com/a/1190000011289535/" target="_blank" rel="noopener">https://segmentfault.com/a/1190000011289535/</a></p>
+<p><a href="https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315" target="_blank" rel="noopener">https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315</a></p>
+<p><a href="https://www.reaktor.com/blog/javascript-performance-fundamentals-make-bluebird-fast/" target="_blank" rel="noopener">https://www.reaktor.com/blog/javascript-performance-fundamentals-make-bluebird-fast/</a></p>
+
+    
+  </div>
+
+  <section class="tag-box">
+    <div class="tag-title">标签</div>
+    <div class="tag-list">
+      
+        <a class="tag-item" href="#YDKJS">
+          <span class="tag-name">YDKJS</span>
+          <span class="tag-size">( 1 )</span>
+        </a>
+      
+    </div>
+  </section>
+
+</article>
+
+
+   <!-- 
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+ -->
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/11/18/react-hooks-%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/categories/alg"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              算法
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/categories/frontend"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              前端
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/categories/journal"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              随笔
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2019/11/25/YDKJS%E9%98%85%E8%AF%BB%EF%BC%9AScope-Closures/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
